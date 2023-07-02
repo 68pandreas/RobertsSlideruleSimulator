@@ -118,6 +118,10 @@ var draw_XR = function (ctx, fn, length, from, to, limit, height, step, micro_fr
     }
   }
 };
+var draw_atPos = function (ctx, fn, length, pos, height) {
+  var location = fn (pos);
+  mark (ctx, Number (pos . toFixed (4)), length * location, height);
+};
 var draw_50R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ctx, fn, length, from, to, limit, height, 10, 5, 10);};
 var draw_10R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ctx, fn, length, from, to, limit, height, 5, 1, 5);};
 var draw_05R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ctx, fn, length, from, to, limit, height, 1, 0.5, 1);};
@@ -232,6 +236,8 @@ var draw_log_1R = function (ctx, length, height, extension, scale, left_extensio
   }
   if (scale . draw_r) {location = Math . log10 (18 / Math . PI); if (location < extension) smark (ctx, 'R', length * location, h2, h5);}
   if (scale . draw_q) {location = Math . log10 (Math . PI / 1.8); if (location < extension) smark (ctx, 'q', length * location, h2, h5);}
+  if (scale . draw_sqrt) {location = Math . log10 (Math . sqrt(2*9.81)); if (location < extension) smark (ctx, '\u{221A}', length * location, h2, h5);}
+
   if (abs_length < 300) { // 2 4
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h4, 1, 0.5, 1);
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h3, 0.5, 0.1, 0.5);
@@ -1029,6 +1035,131 @@ var draw_LL1 = function (ctx, length, height, s) {
 	draw_XL (ctx, s . location, length, 1, 1.02, limit, h2, 0.0005, 0.0001, 0.0005);
 };
 
+var draw_LL2andLL3inOneLength = function (ctx, length, height, s) {
+	var limit = 2;
+	var h5 = height * 0.5; var h2 = height * 0.2; var h3 = height * 0.3; var h4 = height * 0.4;
+    // marks from 1.08 to 1.2 in 0.02 steps
+	draw_MRS (ctx, s . location, length, 1.08, 1.200001, 0.02, limit, h5);
+	// marks from 1.2 to 1.7 in 0.1 steps
+	draw_MRS (ctx, s . location, length, 1.3, 1.700001, 0.1, limit, h5);
+	// marks from 2 to 3 in 0.1 steps
+	draw_MRS (ctx, s . location, length, 2, 3.00001, 0.5, limit, h5);
+	// marks from 3 to 10 in 1. steps
+	draw_MRS (ctx, s . location, length, 3, 10.00001, 1., limit, h5);
+	// marks from 10 to 30 in 10. steps
+	draw_MRS (ctx, s . location, length, 10, 30.00001, 10., limit, h5);
+	// mark at 50
+	draw_atPos(ctx, s . location, length, 50., h5);
+	// mark at 100
+	draw_atPos(ctx, s . location, length, 100., h5);
+	// mark at 200
+	draw_atPos(ctx, s . location, length, 200., h5);
+	// mark at 500
+	draw_atPos(ctx, s . location, length, 500., h5);
+	// mark at 1000
+	mark (ctx, "10\u00b3", length * s . location (1000), h5);
+	// mark at 2000
+	mark (ctx, "2", length * s . location (2000), h5);
+	// mark at 5000
+	mark (ctx, "5", length * s . location (5000), h5);
+	// mark at 10000
+	mark (ctx, "10\u2074", length * s . location (10000), h5);
+	// mark at 20000
+	mark (ctx, "20", length * s . location (20000), h5);
+	// mark at 50000
+	mark (ctx, "50", length * s . location (50000), h5);
+	// mark at 100000
+	mark (ctx, "10\u2075", length * s . location (100000), h5);
+    // from 1.08 to 1.2 subticks in 0.01 steps
+	draw_XR (ctx, s . location, length, 1.08, 1.2, limit, h4, 0.02, 0.01, 0.02);
+    // from 1.08 to 1.2 subsubticks in 0.002 steps
+	draw_XR (ctx, s . location, length, 1.08, 1.2, limit, h3, 0.01, 0.002, 0.01);
+	// from 1.2 to 1.4 subticks in 0.01 steps
+	draw_XR (ctx, s . location, length, 1.2, 1.4, limit, h4, 0.1, 0.01, 0.1);
+    // from 1.2 to 1.4 subsubticks in 0.005 steps
+	draw_XR (ctx, s . location, length, 1.2, 1.4, limit, h3, 0.01, 0.005, 0.01);
+    // special ticks at 1.25
+	tick(ctx, s . location(1.25)*length, h4*2)
+	// and on 1.35
+	tick(ctx, s . location(1.35)*length, h4*2)
+	// from 1.4 to 1.7 subticks in 0.05 steps
+	draw_XR (ctx, s . location, length, 1.4, 1.7, limit, h4, 0.1, 0.05, 0.1);
+    // from 1.4 to 1.7 subsubticks in 0.01 steps
+	draw_XR (ctx, s . location, length, 1.4, 1.7, limit, h3, 0.05, 0.01, 0.05);
+	// from 1.7 to 2.5 subticks in 0.1 steps
+	draw_XR (ctx, s . location, length, 1.7, 2.5, limit, h4, 0.8, 0.1, 0.8);
+    // from 1.7 to 2.5 subsubticks in 0.02 steps
+	draw_XR (ctx, s . location, length, 1.7, 2.5, limit, h3, 0.1, 0.02, 0.1);
+	// from 2.5 to 4 subticks in 0.5 steps
+	draw_XR (ctx, s . location, length, 2.5, 4, limit, h4, 0.5, 0.1, 0.5);
+    // from 2.5 to 4 subsubticks in 0.02 steps
+	draw_XR (ctx, s . location, length, 2.5, 4, limit, h3, 0.1, 0.05, 0.1);
+    // special tick at 3.5
+	tick(ctx, s . location(3.5)*length, h4*2)
+	// from 4 to 6 subticks in 0.5 steps
+	draw_XR (ctx, s . location, length, 4, 6, limit, h4, 1, 0.5, 1);
+    // from 4 to 6 subsubticks in 0.1 steps
+	draw_XR (ctx, s . location, length, 4, 6, limit, h3, 0.5, 0.1, 0.5);
+	// from 6 to 10 subsubticks in 0.2 steps
+ 	draw_XR (ctx, s . location, length, 6, 10, limit, h3, 1, 0.2, 1);
+	// from 10 to 20 subticks in 1 steps
+	draw_XR (ctx, s . location, length, 10, 20, limit, h4, 5, 1, 5);
+    // from 10 to 20 subsubticks in 0.5 steps
+	draw_XR (ctx, s . location, length, 10, 20, limit, h3, 1, 0.5, 1);
+    // special tick at 15
+	tick(ctx, s . location(15)*length, h4*2)
+	// from 20 to 30 subticks in 5 steps
+	draw_XR (ctx, s . location, length, 20, 30, limit, h4, 10, 5, 10);
+    // from 20 to 30 subsubticks in 1 steps
+	draw_XR (ctx, s . location, length, 20, 30, limit, h3, 5, 1, 5);
+	// from 30 to 50 subsubticks in 2 steps
+	draw_XR (ctx, s . location, length, 30, 50, limit, h4, 10, 2, 10);
+    // special tick at 40
+	tick(ctx, s . location(40)*length, h4*2)
+	// from 50 to 100 subticks in 10 steps
+	draw_XR (ctx, s . location, length, 50, 100, limit, h4, 50, 10, 50);
+    // from 50 to 100 subsubticks in 5 steps
+	draw_XR (ctx, s . location, length, 50, 100, limit, h3, 10, 5, 10);
+	// from 100 to 200 subticks in 50 steps
+	draw_XR (ctx, s . location, length, 100, 200, limit, h4, 100, 50, 100);
+    // from 100 to 200 subsubticks in 10 steps
+	draw_XR (ctx, s . location, length, 100, 200, limit, h3, 50, 10, 50);
+	// from 200 to 500 subsubticks in 20 steps
+	draw_XR (ctx, s . location, length, 200, 500, limit, h4, 100, 20, 100);
+    // special ticks at 300 
+	tick(ctx, s . location(300)*length, h4*2)
+    // and 400 
+	tick(ctx, s . location(400)*length, h4*2)
+	// from 500 to 1000 subticks in 100 steps
+	draw_XR (ctx, s . location, length, 500, 1000, limit, h4, 500, 100, 500);
+    // from 500 to 1000 subsubticks in 50 steps
+	draw_XR (ctx, s . location, length, 500, 1000, limit, h3, 100, 50, 100);
+    // from 1000 to 2000 subsubticks in 200 steps
+	draw_XR (ctx, s . location, length, 1000, 2000, limit, h3, 1000, 200, 1000);
+    // from 2000 to 5000 subsubticks in 500 steps
+	draw_XR (ctx, s . location, length, 2000, 5000, limit, h3, 1000, 500, 1000);
+    // special ticks at 3000 
+	tick(ctx, s . location(3000)*length, h4*2)
+    // and 4000 
+	tick(ctx, s . location(4000)*length, h4*2)
+    // from 5000 to 10000 subsubticks in 1000 steps
+	draw_XR (ctx, s . location, length, 5000, 10000, limit, h3, 5000, 1000, 5000);
+    // from 10000 to 20000 subsubticks in 2000 steps
+	draw_XR (ctx, s . location, length, 10000, 20000, limit, h3, 10000, 2000, 10000);
+    // from 20000 to 50000 subsubticks in 5000 steps
+	draw_XR (ctx, s . location, length, 20000, 50000, limit, h3, 10000, 5000, 10000);
+    // special ticks at 30000 
+	tick(ctx, s . location(30000)*length, h4*2)
+    // and 40000 
+	tick(ctx, s . location(40000)*length, h4*2)
+    // from 50000 to 100000 subsubticks in 10000 steps
+	draw_XR (ctx, s . location, length, 50000, 100000, limit, h3, 50000, 10000, 50000);
+	// mark at 1000
+	mark (ctx, "e", length * s . location (Math . E), h5);
+
+
+};
+
 var draw_LL0 = function (ctx, length, height, s) {
 	var limit = 1 + s . right_extension;
 	var h5 = height * 0.5; var h2 = height * 0.2; var h3 = height * 0.3; var h4 = height * 0.4;
@@ -1346,6 +1477,7 @@ var spacer = function (height, options) {
 spacer . prototype . draw_c = true;
 spacer . prototype . draw_pi = true;
 spacer . prototype . draw_e = true;
+spacer . prototype . draw_sqrt = false;
 spacer . prototype . indices = ['1', '10', '100', '1000', '10000', '100000'];
 spacer . prototype . ruleHeight = function () {return this . height;};
 spacer . prototype . hitTest = function (y) {return false;};

@@ -1,0 +1,123 @@
+9.5.21 (Re: [sliderule] Laying Out Slide Rule Scales):
+
+My 2 cents into the conversation.
+When I was creating replica simulator I needed to reverse engineer all the scales.
+In result, each scale has two functions:
+1. The one mapping from range 0..1 to the scale values. This function is called: "value" (with parameter "location").
+2. Inverse scale, mapping from scale values to the range 0..1. This function is called: "location" (with parameter "value").
+
+Example below from the source code from the A and C scale:
+scale_A . prototype . value = function (location) {return Math . pow (10, location + location);};
+scale_A . prototype . location = function (value) {return Math . log10 (value) * 0.5;};
+scale_C . prototype . value = function (location) {return Math . pow (10, location);};
+scale_C . prototype . location = function (value) {return Math . log10 (value);};
+
+With kind regards,
+
+Robert 
+
+Same day:
+
+The "value" function, or inverse U, is used for displaying numerical values under the cursor hairline.
+In other words: I move cursor somewhere, I would then like to know the value under the hairline.
+The "value" function gives me this value.
+
+In yet another words:
+The "location" functions tells the simulator where to put tick marks.
+The "value" functions tells the user, where the cursor is.
+
+When I enter numeric value, the simulation finds "location", where to move the cursor.
+Once the cursor is moved there, it displays "values" of all other scales at this location.
+
+With kind regards,
+
+Robert 
+
+Same day:
+
+Functions for sine scale:
+scale_SIN . prototype . value = function (location) {return Math . asin (Math . pow (10, location - 1)) * 180 / Math . PI;};
+scale_SIN . prototype . location = function (value) {return 1 + Math . log10 (Math . sin (value * Math . PI / 180));}; 
+
+26.7.21 ([sliderule] Breitling Navitimer Cosmonaute circular slide rule replica.):
+
+Dear All,
+
+Yes, finally, I had my first attempt at a replica of a circular slide rule.
+Maybe not exactly, as this is the replica of a watch with a slide rule.
+The watch is fully functional.
+As it is a replica of an analogue watch it has the following characteristics:
+1. It has to be winded up every day. Otherwise it will stop after a while.
+2. It has programmed inaccuracy between -4 .. 6 seconds per 24 hours. (Of course, it can be zero to make it absolutely precise)
+As usual, you can find it on my website: www.sliderules.org under the Breitling section.
+
+Quick manual:
+1. Cursor can be dragged around and bezel can be dragged around.
+2. Right clicking on bezel or on cursor or on stator allows for entering numbers, which includes PI, E, Naut, Stat, km, mph.
+3. Clicking on the Breitling logo (right or left click) changes the model.
+4. Clicking the centre of the watch, winds it up to 100%, adjusts the time and date and ZEROES inaccuracy.
+5. Clicking and holding pushpiece B for 4 seconds automatically adjusts the watch.
+6. Clicking and holding pushpiece B for 8 seconds automaitcally adjusts the watch and changes the embedded inaccuracy value to another randomly chosen one from the range between -4 and 6 seconds per 24 hours.
+7. Clicking on the top left corner of the screens brings the statistics monitor. Clicking it again switches the statistics off.
+8. Left clicking and right clicking on the crown allows for manual adjustments of time and date.
+9. To wind up the watch, hover over the crown and start scrolling the mouse wheel.
+
+Of course, you can copy the whole lot to your computer and use it even without internet connection.
+You may think there is some transmission between your computer and the server. Well, this is not the case. The watch status is store in your browser's local storage system, which is completely harmless.
+
+Enjoy.... 
+
+2.1.23 (Re: [sliderule] P scale on slide):
+
+Dear All,
+
+There already is a replica of Ultralog on my website.
+
+As far as the perfect arrangement of scales is concerned I tried my creativity and fabricated two: "Raven Rq" and "Templar".
+They use two tricks to limit the number of scales.
+The first trick emulates the ST scale by C scale on the slide.
+There are two gauge marks on the C scale: R and q.
+Simply right click over the value of 10 on the C scale and enter "R" as the value.
+Or right click over the value of 1 on the C scale and enter "Q" as the value.
+The C scale will automatically slide to a position, where it can function as the ST scale.
+The second trick is to use the D scale on the back scale as LL0.
+
+Those trick limit the number of scales.
+
+The "Templar" slide rule is quite elaborate, as it uses nested slides. 
+
+4.4.22: 
+
+Hi Andreas, (Re: Replica of Relay 158 / SIC 1580)
+
+....
+
+I have to admit, I forgot about you asking for SIC 1580.
+At the moment I am involved in the construction of a musical software synthesiser: http://www.hercsmusicsystems.com.au .
+Hence, I will not be able to put much time into the development of slide rule replicas at the moment.
+
+You may actually try to create it yourself.
+If you already know JavaScript, then it should be a relatively exercise.
+First, you will need to clone or copy the whole repository from github.
+http://www.github.com and then find Sliderule-Simulator-or-Emulator
+The direct link will be: https://github.com/HERCsMusicSystems/Sliderule-Simulator-or-Emulator
+You may need to have an account with github to do it, but I am not 100% sure.
+
+Now, all the replicas are located inside the "react" folder.
+(Don't be mislead by the name, I am not using react native technology, it is just a residue name, as I used to use it.)
+All replicas are *.html files, for example: the code for Hemmi Versalog is in hemmi_versalog.html file.
+Since this is probably to closest looking replica to SIC 1580 it would probably make sens to make a copy and name it: sic_1580.html.
+Open this file in your browser (to see the replica) and at the same time open it in a text editor, such as Notepad++ (you may need to download and install it).
+Then start making changes to the code and see what happens in the browser.
+Most likely you will wish to start deleting scales and placing other scale instead.
+
+I suspect there will be a considerable level of complications.
+It looks to me like SIC 1580 has a lot scales, which are not yet defined in my simulator.
+As such, they will need to be reverse-engineered and coded.
+
+What is your opinion on the matter?
+Will you be able to do something like this?
+
+Cheers,
+
+Robert 

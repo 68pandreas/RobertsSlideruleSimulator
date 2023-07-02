@@ -1,0 +1,222 @@
+<meta charset="UTF-8"/>
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Nestler 37</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
+  </head>
+<body onkeydown = "javascript: ProcessKey (event);">
+<div>
+  <font color="black">
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+    <input type = checkbox id = on_swap onchange = "javascript: scale_swap (this . checked);" />Slide reversed.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+  </font>
+  <br/>
+</div>
+<div style="position: absolute; top: 360px; right: 10px; z-index: -2; color: black; font-family: arial; font-style: italic; text-indent: 50px; width: 400px;">
+<p>The above replica of Nestler 37 belonged to Sergei Korolev, the Soviet rocket engineer, who put the first man into the Earth's orbit
+(pictured on the photograph together with Yuri Gagarin).
+The R-7 rocket, designed by Korolev, commonly known as "Soyuz", is still in use today, even by NASA.</p>
+
+<p>Interestingly, an earlier version belonged to Wernher von Braun, the designer of A4 rockets, which were used against UK during World War II.
+He was also the father of the American space program.</p>
+</div>
+
+<div id="root"></div>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+<script>
+
+var sliderules = new Sliderules ();
+var oak = new Image (); oak . src = 'oak.png'; oak . onload = function () {sliderules . requireRedraw = true;};
+
+//=============================
+var s = new Sliderule (1200, {left_margin: 0.089, right_margin: 0.089, cursor_left_extension: 0.0825, cursor_right_extension: 0.0825, cursor_limit_left: 0.0075, cursor_limit_right: 0.0075, cursor_top_margin: -14, cursorHairline: 'black', hairline_top: -10, cursor_markings_shift: 0.005}); sliderules . sliderules . push (s);
+
+//floor = new VintageFloor (left, right, top, bottom, rounding, colour, background, left_top, left_bottom, left_dent, right_top, right_bottom, right_dent)
+var floor = new VintageFloor (0.0895, 0.0895, -4, 0, 4, 'blue', oak, 76, 70 + 36 + 6, 0.102, 100, 136, 0.102);
+// 72 => 102
+// 110 => 140
+// well is 72 => from 70 => to 142
+// RuleSupport(location, top, bottom, width, radius, background, colour)
+floor . backMarkings . push (new RuleSupport (0.5, 72, 70 + 36 - 4, 1.4, 8, '#efefd0', 'black'));
+floor . backMarkings . push (new RuleSupport (0.5, 70 + 36 + 4, 70 + 72 - 2, 1.4, 8, '#efefd0', 'black'));
+floor . markings . push (new Engraving ('SYSTEM RIETZ \u2116 23 R        ALBERT NESTLER     A .-G    LAHR    i/B      D.R.G.M.      D.R.PATENT', '12px arial', 'center', 'black', 0.5, 96));
+floor . scales . push ({x: -1.2685, y: 70 + 36 + 4, scale: new scale_Metric_down (24, {scale: 25, right_extension: 2})});
+s . backBraces . push (floor);
+s . cursorBraces . push (new CursorWindow (8, 4, 'silver', 'black'));
+s . cursors . push (new Cursor (HairlineS, 14, 196, 'red', {marking_shift: 0.005}));
+s . cursors . push (new Cursor (HairlineD, 14, 196, 'red', {marking_shift: 0.005}));
+
+var r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rounding: 8, rule_colour: '#ffffe0', v_scaling: 0.5}); 
+s . rules . push (r);
+r . markings . push (new Screw (-0.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . scales . push (new scale_Metric_down (24, {scale: 25, shift: -1, right_extension: 0.04}));
+r . scales . push (new spacer (12));
+
+s . rules . push (new spacer (2));
+
+r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); 
+s . rules . push (r);
+r . markings . push (new Screw (-0.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_V (24, {left_extension: 0.067, right_extension: 0.06, lines: [{left: -0.035, right: 1.03, height: 0.2}], draw_e: false, draw_pi: false}));
+r . scales . push (new scale_A (24, {left_extension: 0.053, right_extension: 0.055, draw_e: false, lines: [{left: 0, right: 1, height: 0.8}]}));
+r . markings . push (new Engraving ('V', '12px arial', 'left', 'black', -0.05, 18));
+r . markings . push (new Engraving ('V', '12px arial', 'left', 'black', 1.04, 18));
+
+var acStack = [
+  new scale_B (24, {left_extension: 0.053, right_extension: 0.055, draw_e: false, lines: [{left: 0, right: 1, height: 0.2}]}),
+  new scale_DI (24, {left_extension: 0.053, right_extension: 0.053, draw_c: false, colour: 'red', lines: [{left: 0, right: 1, height: 0.2}, {left: 0, right: 1, height: 0}]}),
+  new scale_C (24, {left_extension: 0.053, right_extension: 0.053, draw_c: false, draw_sqrt: true, draw_e: false, lines: [{left: 0, right: 1, height: 0.8}]})
+];
+
+var acMarkings = [
+  new Screw (-0.0725, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
+  new Screw (1.0725, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver')
+];
+
+var stStack = [
+  new scale_S_down (24, {right: 'S', rs: 0.015, lines: [{left: 0, right: 1, height: 0.2}]}),
+  new scale_ST (24, {right: 'S&T', rs: 0.015, draw_c: false, lines: [{left: 0, right: 1, height: 0.8}, {left: 0, right: 1, height: 1}]}),
+  new scale_T (24, {right: 'T', rs: 0.015, lines: [{left: 0, right: 1, height: 0.8}]})
+];
+
+var stMarkings = [
+  new Screw (-0.0725, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
+  new Screw (1.0725, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
+  new VLine (0, 0, 72, 'black'),
+  new VLine (1, 0, 72, 'black')
+];
+
+r = new Rule ({stator: 1, left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
+r . markings = acMarkings;
+r . scales = acStack;
+
+r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
+r . markings . push (new Screw (-0.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . scales . push (new scale_D (24, {left_extension: 0.053, right_extension: 0.053, draw_e: false, lines: [{left: 0, right: 1, height: 0.2}]}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_U (24,  {left_extension: 0.024, right_extension: 0.0215, lines: [{left: -0.023, right: 1.023, height: 0.8}]}));
+r . markings . push (new Engraving ('U', '12px arial', 'left', 'black', -0.04, 44));
+r . markings . push (new Engraving ('U', '12px arial', 'left', 'black', 1.03, 44));
+
+s . rules . push (new spacer (2));
+r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0', rounding: 0}); s . rules . push (r);
+r . scales . push (new spacer (6));
+
+//===============================
+
+s = new Sliderule (1200, {left_margin: 0.089, right_margin: 0.089, cursor_left_extension: 0.0825, cursor_right_extension: 0.0825, cursor_limit_left: 0.0075, cursor_limit_right: 0.0075, cursor_top_margin: -14, cursorHairline: 'black', hairline_top: -10, cursor_markings_shift: 0.005, cursorGlass: false, cursorFrame: false, cursorHairline: false}); sliderules . sliderules . push (s);
+// well is 72 => from 58 => to 130
+var floor = new VintageFloor (0.0895, 0.0895, -4, 0, 4, 'blue', oak, 88, 124, 0.102, 64, 100, 0.102);
+floor . backMarkings . push (new RuleSupport (0.5, 0, 90, 1.17, 8, '#efefd0', 'black'));
+floor . backMarkings . push (new RuleSupport (0.5, 98, 196, 1.17, 8, '#efefd0', 'black'));
+floor . backMarkings . push (new RuleSupport (0.5, 4, 30, 1.17, 8, oak, 'black'));
+floor . backMarkings . push (new RuleSupport (0.5, 150, 190, 1.17, 8, oak, 'black'));
+
+s . braces . push (floor);
+s . cursors . push (new Cursor (0, 84, 128, 'blue', {main: true, static: true}));
+s . cursors . push (new Cursor (1, 60, 104, 'blue', {main: true, static: true}));
+s . cursorBraces . push (new RuleSupport (0, -12, -4, 0.165, 4, 'silver', 'black'));
+
+
+r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0', rounding: 0}); s . rules . push (r);
+r . scales . push (new spacer (6));
+
+s . rules . push (new spacer (2));
+
+r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
+r . markings . push (new Screw (-0.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_L (24, {lines: [{left: 0, right: 1, height: 0.8}]}));
+r . scales . push (new scale_D (24, {left_extension: 0.053, right_extension: 0.053, draw_e: false, lines: [{left: 0, right: 1, height: 0.2}]}));
+
+r = new Rule ({stator: 1, left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
+r . markings = stMarkings;
+r . scales = stStack;
+
+r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
+r . markings . push (new Screw (-0.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . scales . push (new scale_A (24, {left_extension: 0.053, right_extension: 0.055, draw_e: false, lines: [{left: 0, right: 1, height: 0.8}]}));
+r . scales . push (new scale_J (24, {lines: [{left: 0, right: 1, height: 0.2}], draw_e: false, draw_pi: false}));
+r . scales . push (new spacer (2));
+
+s . rules . push (new spacer (2));
+
+r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rounding: 8, rule_colour: '#ffffe0', v_scaling: 0.5}); s . rules . push (r);
+r . markings . push (new Screw (-0.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . scales . push (new spacer (12));
+r . scales . push (new scale_Metric_down (24, {scale: 25, shift: -1, right_extension: 0.04}));
+
+//===============================
+
+s = new Sliderule (1200, {position: {x: 0, y: 30}, left_margin: 0.089, right_margin: 0.089, cursor_left_extension: 0.0825, cursor_right_extension: 0.0825, cursor_limit_left: 0.0075, cursorGlass: false, cursorFrame: false, hairline_bottom: -42}); sliderules . sliderules . push (s);
+s . cursorBraces . push (new RuleSupport (0, -4, 10, 0.165, 4, 'silver', 'black'));
+s . backBraces . push (new RuleSupport (0.589, 0, 54, 1.179, 4, oak, 'black'));
+r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0', rounding: 0}); s . rules . push (r);
+r . scales . push (new spacer (6));
+s . rules . push (new spacer (8));
+r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
+r . markings . push (new Screw (-0.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . scales . push (new scale_LL2andLL3inOneLength(19, {draw_e: false, draw_pi: false})); 
+r . scales . push (new spacer (2));
+r . scales . push (new scale_J (19, {draw_e: false, draw_pi: false}));
+
+</script>
+
+<script src="sliderule_application.js"></script>
+
+<script>
+var scale_swap = function (st) {
+  sliderules . sliderules [0] . rules [3] . scales = st ? stStack : acStack;
+  sliderules . sliderules [0] . rules [3] . markings = st ? stMarkings: acMarkings;
+  sliderules . sliderules [1] . rules [3] . scales = st ? acStack : stStack;
+  sliderules . sliderules [1] . rules [3] . markings = st ? acMarkings : stMarkings;
+  sliderules . requireRedraw = true;
+};
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+scale_swap (document . getElementById ('on_swap') . checked);
+</script>
+
+
+</body>
+</html>
