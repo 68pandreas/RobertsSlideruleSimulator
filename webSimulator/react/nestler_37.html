@@ -72,7 +72,7 @@ floor . backMarkings . push (new RuleSupport (0.5, 70 + 36 + 4, 70 + 72 - 2, 1.4
 floor . markings . push (new Engraving ('SYSTEM RIETZ \u2116 23 R        ALBERT NESTLER     A .-G    LAHR    i/B      D.R.G.M.      D.R.PATENT', '12px arial', 'center', 'black', 0.5, 96));
 floor . scales . push ({x: -1.2685, y: 70 + 36 + 4, scale: new scale_Metric_down (24, {scale: 25, right_extension: 2})});
 s . backBraces . push (floor);
-s . cursorBraces . push (new CursorWindow (8, 4, 'silver', 'black'));
+s . cursorBraces . push (new CursorWindow (0, 4, 'silver', 'black',15));
 s . cursors . push (new Cursor (HairlineS, 14, 196, 'red', {marking_shift: 0.005}));
 s . cursors . push (new Cursor (HairlineD, 14, 196, 'red', {marking_shift: 0.005}));
 
@@ -185,7 +185,7 @@ r . scales . push (new scale_Metric_down (24, {scale: 25, shift: -1, right_exten
 
 //===============================
 
-s = new Sliderule (1200, {position: {x: 0, y: 30}, left_margin: 0.089, right_margin: 0.089, cursor_left_extension: 0.0825, cursor_right_extension: 0.0825, cursor_limit_left: 0.0075, cursor_limit_right: 0.0075, cursor_top_margin: -14, cursor_bottom_margin: -4, cursorHairline: 'black', hairline_top: -14, cursor_markings_shift: 0.005, cursorFrame: false, hairline_bottom: 0}); sliderules . sliderules . push (s);
+s = new Sliderule (1200, {position: {x: 0, y: 30}, left_margin: 0.089, right_margin: 0.089, cursor_left_extension: 0.02, cursor_right_extension: 0.02, cursor_limit_left: 0.0075, cursor_limit_right: 0.0075, cursor_top_margin: -14, cursor_bottom_margin: -11, cursorHairline: 'black', hairline_top: -14, cursor_markings_shift: 0.005, cursorFrame: false, hairline_bottom: -11}); sliderules . sliderules . push (s);
 s . cursorBraces . push (new RuleSupport (0, -4, 10, 0.165, 4, 'silver', 'black'));
 s . backBraces . push (new RuleSupport (0.589, 0, 54, 1.179, 4, oak, 'black'));
 r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0', rounding: 0}); s . rules . push (r);
