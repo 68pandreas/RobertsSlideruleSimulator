@@ -185,7 +185,7 @@ r . scales . push (new scale_Metric_down (24, {scale: 25, shift: -1, right_exten
 
 //===============================
 
-s = new Sliderule (1200, {position: {x: 0, y: 30}, left_margin: 0.089, right_margin: 0.089, cursor_left_extension: 0.0825, cursor_right_extension: 0.0825, cursor_limit_left: 0.0075, cursorGlass: false, cursorFrame: false, hairline_bottom: -42}); sliderules . sliderules . push (s);
+s = new Sliderule (1200, {position: {x: 0, y: 30}, left_margin: 0.089, right_margin: 0.089, cursor_left_extension: 0.0825, cursor_right_extension: 0.0825, cursor_limit_left: 0.0075, cursor_limit_right: 0.0075, cursor_top_margin: -14, cursor_bottom_margin: -4, cursorHairline: 'black', hairline_top: -14, cursor_markings_shift: 0.005, cursorFrame: false, hairline_bottom: 0}); sliderules . sliderules . push (s);
 s . cursorBraces . push (new RuleSupport (0, -4, 10, 0.165, 4, 'silver', 'black'));
 s . backBraces . push (new RuleSupport (0.589, 0, 54, 1.179, 4, oak, 'black'));
 r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0', rounding: 0}); s . rules . push (r);
