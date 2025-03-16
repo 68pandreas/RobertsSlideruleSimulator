@@ -228,6 +228,7 @@ var draw_log_1R = function (ctx, length, height, extension, scale, left_extensio
   draw_MR (ctx, Math . log10, length, 2, 9, extension, h5, scale . marking_limit);
   if (abs_length >= 800) draw_MRS (ctx, Math . log10, length, 1.1, 2, 0.1, extension, h5);
   if (scale . draw_pi) {location = Math . log10 (Math . PI); if (location < extension) smark (ctx, '\u03c0', length * location, h2, h5);}
+  if (scale . draw_180divPi) {location = Math . log10 (180./Math . PI); if (location < extension) smark (ctx, '\u03c1', length * location, h2, h5);}
   if (scale . draw_e) {location = Math . log10 (Math . E); if (location < extension) smark (ctx, '\u{1d452}', length * location, h2, h5);}
   if (scale . draw_c) {
     location = Math . log10 (Math . sqrt (4 / Math . PI)); if (location < extension) smark (ctx, 'c', length * location, h2, h5);
@@ -302,6 +303,7 @@ var draw_log_1L = function (ctx, length, height, extension, scale) {
   draw_ML (ctx, Math . log10, length, 2, 9, extension, height * 0.5);
   if (abs_length >= 800) draw_MLS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
   if (scale . draw_pi) {location = Math . log10 (Math . PI); if (location > extension) smark (ctx, '\u03c0', length * location, height * 0.2, height * 0.5);}
+  if (scale . draw_180divPi) {location = Math . log10 (180./Math . PI); if (location > extension) smark (ctx, '\u03c1', length * location, height * 0.0, height * 0.5);}
   if (scale . draw_e) {location = Math . log10 (Math . E); if (location > extension) smark (ctx, 'e', length * location, height * 0.2, height * 0.5);}
   if (scale . draw_c) {
     location = Math . log10 (Math . sqrt (4 / Math . PI)); if (location > extension) smark (ctx, 'c', length * location, height * 0.2, height * 0.5);
@@ -1476,6 +1478,7 @@ var spacer = function (height, options) {
 
 spacer . prototype . draw_c = true;
 spacer . prototype . draw_pi = true;
+spacer . prototype . draw_180divPi = false;
 spacer . prototype . draw_e = true;
 spacer . prototype . draw_sqrt = false;
 spacer . prototype . indices = ['1', '10', '100', '1000', '10000', '100000'];

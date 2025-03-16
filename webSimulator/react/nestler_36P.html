@@ -40,20 +40,46 @@
   <br/>
 </div>
 <div style="position: absolute; top: 360px; right: 200px; z-index: -2; color: black; font-family: arial; font-style: italic; text-indent: 0px; width: 800px;">
-<p>This Nestler does not exist physically. Inspired by <a href="https://groups.io/g/sliderule/files/G%CE%B8%20Hemmi%20120.pdf">FanHsiu's findings</a> about the 
+<p>This Nestler Progress does not exist physically. Inspired by FanHsiu's findings about the 
 Hemmi 120 it assembles ideas from Faber 1/98 and Nestler 36, Darmstadt Faber 1/54 and Nestler 21 as well as from 
-Hemmi 120 into a new system for sliderule scales.</p>
+Thornton 121 and Hemmi 120 into a new system for sliderule scales which fits onto a standard wooden Nestler or Faber body.</p>
 <p>A, B, CI, C, D as well as Sin and Tan are used as usual on the System Rietz, but 
-divided in deci degs. The Sin and Tan side of the Slide features a C scale, so that it 
-is very convenient to work withh the flipped slide. Contrary to the Darmstadt system 
+the latter divided in deci degs. The Sin and Tan side of the Slide features a CI scale, so that it 
+is also convenient to work with the flipped slide. Contrary to the Darmstadt system 
 chain calculations with Sin and Tan are possible. Small angles are handled by the C scale by means
-of 180/PI.</p>
-<p>The Sinh scales allow to calculate Cosh by means of Cosh(x) = sqrt(1+Sinh(x)^2) using scale A. 
+of 180/PI = 57.3, marked with rho on C</p>
+<p>e.g. 1*sin(4 deg): Move rho on C to 10 on D. At 4 on C: 0.0698 on D. This very slide setting can also be used to transfer 
+arbitrary angles in degree on C to rad on D</p>
+<p>e.g. 5/tan(4 deg): Move 4 on C to 5 on D. At rho on C: 71.7 on D. Please note that as on typical ST scales the same method is 
+used  for sin and tan. </p> Cos of all angels < 5.5 deg is approx. 1.
+<p>The Sinh scales allow to calculate Cosh by means of Cosh(x) = sqrt(1+Sinh(x)^2) using scale A. E.g. Cosh(1.3)= 1.97: 
+Set cursor to 1.3 on Sh2. At A: 2.89. Add 1 in the head: 3.89. Move cursor to 3.89 on A. On D 1.97. 
 It also allows to calculate Tanh by the Gudermanian approach Tanh(x) = sin(tan^-1(Sinh(x)).
-Of course the slide needs to be flipped for this.</p>
+The slide needs to be flipped for this. For Sh2 a value transfer is needed since there is no T2 scale. E.g. Tanh(1.3)= 0.862:
+Set cursor to 1.3 on Sh2. At D: 1.699. Move cursor to 1.699 on CI. Read 59.5 deg on CoTan (red!). Move cursor to 59.5 on Sin. 
+Read 0.862 on D. For further details on this Gudermanian approach refer to FanHsius work on the Hemmi 120 on the sliderule group.</p>
+<p>LL2 and LL3 are used as typically and arranged as on Faber 98 and Nestler 36. 
+LL1 is simulated by C scale by means of Differential LogLog Approach of Thornton 121 and 131. E.g. 1.03^10: 
+Set 1 on C to 0.985 on left scale extension of D. Each tick towards left represents 0.01 more as correction mark. 
+For 1.03 three ticks to the left being the same as 0.985 on left scale extension. At 3 on C read 1.344 on LL2, 
+as 3 on C stands now for 1.03 on LL1. LL0 can be simulated as well but please note that only very minor corrections between left 
+index of D and first tick of left extension scales are needed. For further details please refer to the Thornton Differential manual.</p> 
+<p>An L scale is provided on the bevelled edge but cannot be simulated properly with a cursor reading right now; 
+it is however included in the markings on side and/or on central hairline (switch on/off by check boxes in the top).</p>
+<p>For K there was the question of importance compared to L. Since L at least for teaching purposes is considered more
+important than K, K had been skipped. For calculating x^3 in high precision: Please use C CI and D instead. 
+For calculating the third root, please either use LL2 and LL3 or the approach e.g. explained in Pickworth for the 
+Mannheim scale layout.</p>
+<p>Mechanical and civil engineers may have asked for a variant with one section of cosh (chain line!) 
+and K instead of Sh1 and Sh2. This layout however would not be suitable for electrical engineers. If a K scale is seen as crucial 
+for their practical use, then the L scale should be replaced by K. L as a function can be replaced by LL2 and LL3 setting the index of 
+C to 10 on LL3 and using LL2 and LL3 in the range between 1.1 and 10 only.</p>
+<p>Using Sh1 and Sh2 instead of two lengths of tanh as on Hemmi 120 has the disadvantage that value transfers to CI are needed for Sh2,
+but the advantage that Cosh which is of some importance for civil and mechanical engineering can be calculated quite easily and 
+that the untypical second length of Tanh is avoided. From a teaching perspective the additional CI also simplifies the use of the 
+CoTan if seen directly in conjunction. That may also be an important reason for DI on US-American slide rules. </p>
 
-
-</div>
+ </div>
 
 <div id="root"></div>
 
@@ -106,7 +132,7 @@ r . markings . push (new Engraving ('LL2', '12px arial', 'left', 'black', -0.053
 var acStack = [
   new scale_B (24, {left_extension: 0.053, right_extension: 0.055, draw_e: false, lines: [{left: 0, right: 1, height: 0.2}]}),
   new scale_DI (24, {left_extension: 0.053, right_extension: 0.053, draw_c: false, colour: 'red', lines: [{left: 0, right: 1, height: 0.2}, {left: 0, right: 1, height: 0}]}),
-  new scale_C (24, {left_extension: 0.053, right_extension: 0.053, draw_c: false, draw_sqrt: false, draw_e: false, lines: [{left: 0, right: 1, height: 0.8}]})
+  new scale_C (24, {left_extension: 0.053, right_extension: 0.053, draw_180divPi: true, draw_c: false, draw_sqrt: false, draw_e: false, lines: [{left: 0, right: 1, height: 0.8}]})
 ];
 
 var acMarkings = [
@@ -117,8 +143,8 @@ var acMarkings = [
 var stStack = [
   new spacer (4),
   new scale_SCdec_down (22, {left_extension: 0.019, rs: 0.015, lines: [{left: -0.018, right: 1, height: 0},{left: -0.018, right: 1, height: 0.2}]}),
-  new scale_CTT1dec_down (22, {left_extension: 0.017, rs: 0.015, lines: [{left: -0.017, right: 1, height: 0},{left: -0.017, right: 1, height: 0.2}]}),
-  new scale_C (24, {left_extension: 0.053, right_extension: 0.053, draw_c: false, draw_sqrt: false, draw_e: false, lines: [{left: 0, right: 1, height: 0.8}]})
+  new scale_CTTdec_down (22, {left_extension: 0.017, rs: 0.015, lines: [{left: -0.017, right: 1, height: 0},{left: -0.017, right: 1, height: 0.2}]}),
+  new scale_CI (24, {left_extension: 0.053, right_extension: 0.053, draw_c: false, draw_sqrt: false, draw_e: false, colour: 'red', lines: [{left: 0, right: 1, height: 0.8}]})
 ];
 
 var stMarkings = [
